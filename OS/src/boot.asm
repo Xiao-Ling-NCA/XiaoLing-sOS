@@ -13,13 +13,13 @@ boot:
 
 loadingKernelOntoMemory:
     mov si, 0x0000 ;prevent any shenanegans
-    mov ax, 0x2000
+    mov ax, 0x1000
     mov es, ax
     mov bx, 0x0000
     
     ;imma start trying some stuff rq here dont mind me
     mov ah, 0x02
-    mov al, 2 ; reads 1 sector
+    mov al, 4 ; reads 4 sector
     mov ch, 0 ; cylinder 0
     mov cl, 2 ; setor 2
     mov dh, 0 ; head 0
@@ -42,17 +42,17 @@ loadKernel:
     ; The easier the engineering, the more time I get to goon
 
     ;stack segment
-    mov ax, 0x3000
+    mov ax, 0x1000
     mov ss, ax 
     mov sp, 0xFFFF ;sets stack pointer at the top of the entire 64kb segment
     ;data segment
-    mov ax, 0x2000
+    mov ax, 0x1000
     mov ds, ax
     mov es, ax
     sti 
 magicstuff:
     ;ts is so peak
-    jmp 0x2000:0000
+    jmp 0x1000:0000
     
     ;to prevent my stupidity, emergency hang is here
     ;i dont think it even does anything
