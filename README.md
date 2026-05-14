@@ -1,1 +1,1 @@
-This is my 32 Bit operating system (work in progress).
+This is my 16 Bit operating system (work in progress).
