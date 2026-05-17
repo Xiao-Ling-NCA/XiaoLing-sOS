@@ -17,6 +17,8 @@ extern kmain
 %endmacro
 
 main:
+    mov [drive_num], dl ;we keep dl from the previous boot
+
     clearall
     
     cli
@@ -97,7 +99,7 @@ setup_ivt:
 
     ;interrupt 21
     mov di, 0x84
-    mov word [es:di], int_26_handler
+    mov word [es:di], int_21_handler
     add di, 2
     mov word [es:di], 0x1000
 
@@ -106,5 +108,28 @@ setup_ivt:
 not_my_problem_exceptions:
     iret
 
-int_26_handler:
-    ; to be implemented later
+int_21_handler:
+    ;basic DOS interrupts to implement
+    cmp ah, 0x4C
+    je int_21_quit_program
+
+int_21_quit_program:
+    jmp hard_reset
+int_21_open_file:
+    ;open file
+    jmp int_handler_end
+int_21_close_file:
+    ;close file
+    jmp int_handler_end
+int_21_read_io:
+    ;read file/device
+    jmp int_handler_end
+
+int_handler_end:
+    iret
+
+
+drive_num:
+    db 0
+
+%include "../drivers/floppydiskdriver.asm"
